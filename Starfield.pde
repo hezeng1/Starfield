@@ -1,8 +1,8 @@
 NormalParticle [] balls;
 void setup()
 {
-   size(300,300);
-   balls = new NormalParticle[50];
+   size(800,800);
+   balls = new NormalParticle[500];
    for(int i = 0; i<balls.length;i++)
    {
    	 balls[i] = new NormalParticle();
@@ -11,23 +11,25 @@ void setup()
 }
 void draw()
 {
-	//background(0);
+    background(0);
 	for(int p = 0; p<balls.length;p++)
 	{
-	    balls[p].show();
 	    balls[p].move();
+	    balls[p].show();
+	    balls[p].wrap();
 	}
 }
 class NormalParticle
 {
 
-double x,y,speEd,anGle; 
+double x,y,speEd,anGle;
+int rEd, gReen, bLue; 
 NormalParticle()
   {
-  	x = 150;
-  	y = 150; 
-  	speEd = 2;
-  	anGle = 360;
+  	x = 400;
+  	y = 400; 
+  	speEd = (Math.random()*69);
+  	anGle = (Math.random()*2*Math.PI);
   }
 void move()
 {
@@ -37,7 +39,18 @@ void move()
 void show()
 { 
  fill(255);
- ellipse(((int)x),((int)y),10,10);
+ ellipse(((int)x),((int)y),5,5);
+}
+void wrap()
+{
+	if(x>800 || x<0 || y>800 || y<0)
+	{
+		x = 400;
+  	    y = 400; 
+  	    speEd = (Math.random()*69);
+  	    anGle = (Math.random()*2*Math.PI);
+	}
+
 }
 
 }
