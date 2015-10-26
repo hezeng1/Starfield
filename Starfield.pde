@@ -1,14 +1,15 @@
-NormalParticle [] balls;
+Particle [] balls;
 void setup()
 {
    size(800,800);
-   balls = new NormalParticle[500];
-   for(int i = 0; i<balls.length;i++)
+   balls = new Particle[500];
+   for(int i = 1; i<balls.length;i++)
    {
    	 balls[i] = new NormalParticle();
-   } 
-
-}
+   	}
+   	 balls[0] = new OddballParticle();
+   	 balls[1] = new JumboParticle();
+ }
 void draw()
 {
     background(0);
@@ -17,29 +18,36 @@ void draw()
 	    balls[p].move();
 	    balls[p].show();
 	    balls[p].wrap();
-	}
+	 }
 }
-class NormalParticle
+class NormalParticle implements Particle 
 {
 
 double x,y,speEd,anGle;
-int rEd, gReen, bLue; 
+int rEd, gReen, bLue,siZez; 
 NormalParticle()
   {
   	x = 400;
   	y = 400; 
   	speEd = (Math.random()*69);
   	anGle = (Math.random()*2*Math.PI);
+  	rEd = (int)(Math.random()*256);
+  	gReen =(int)(Math.random()*256);
+  	bLue = (int)(Math.random()*256);
+  	siZez = 5;
+
   }
-void move()
+public void move()
 {
   x+=(Math.cos(anGle)*speEd);
   y+=(Math.sin(anGle)*speEd);
+  anGle+=.0000005;
+  
 }
-void show()
+public void show()
 { 
- fill(255);
- ellipse(((int)x),((int)y),5,5);
+ fill(rEd,gReen,bLue);
+ ellipse(((float)x),((float)y),siZez,siZez);
 }
 void wrap()
 {
@@ -57,14 +65,54 @@ void wrap()
 
 interface Particle
 {
-	//your code here
+	public void move();
+	public void show();
+	public void wrap();
 }
-class OddballParticle //uses an interface
+class OddballParticle implements Particle 
 {
-	//your code here
+	double oDdx,oDdy, oDdspeed,oDdangle; 
+	int oDdred,oDdgreen,oDdblue;
+	OddballParticle()
+	{
+		oDdx= 400;
+		oDdy= 400;
+		oDdspeed= (Math.random()*8);
+		oDdangle = (Math.random()*2*Math.PI);
+		oDdred = (int)(Math.random()*256);
+		oDdgreen = (int)(Math.random()*256);
+		oDdblue = (int)(Math.random()*256);
+		
+	}
+	public void move()
+	{
+		oDdx += (Math.tan(oDdangle)*oDdspeed);
+		oDdy += (Math.sin(oDdangle)*oDdspeed);
+	} 
+	public void show()
+	{
+		fill(oDdred,oDdgreen,oDdblue);
+		ellipse(((float)oDdx),((float)oDdy),20,20);
+	}
+	public void wrap()
+	{
+		if(oDdx>800 || oDdx<0 || oDdy>800 || oDdx<0)
+		{
+            oDdx= 400;
+		    oDdy= 400;
+			oDdspeed= (Math.random()*8);
+			oDdangle = (Math.random()*2*Math.PI);
+		}
+	}
+    
+
 }
-class JumboParticle //uses inheritance
+class JumboParticle extends NormalParticle 
 {
-	//your code here
+      
+     JumboParticle()
+     {
+        siZez = 50;
+     }
 }
 
